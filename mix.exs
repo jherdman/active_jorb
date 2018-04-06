@@ -9,7 +9,7 @@ defmodule ActiveJorb.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
-      package: package(),
+      package: package()
     ]
   end
 
@@ -30,6 +30,7 @@ defmodule ActiveJorb.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, "~> 0.9.0"}
     ]
   end
 

@@ -1,0 +1,106 @@
+defaults: &defaults
+  docker:
+    - image: elixir:1.6.4
+
+  environment:
+    MIX_HOME: "/root/active_jorb/global"
+
+  working_directory: ~/active_jorb
+
+version: 2
+jobs:
+  checkout_code:
+    <<: *defaults
+
+    steps:
+      - checkout
+
+      - persist_to_workspace:
+          root: .
+          paths:
+          - .
+
+  install_dependencies:
+    <<: *defaults
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ .Branch }}--{{ checksum "mix.lock" }}
+            - v1-dependencies-{{ .Branch }}
+            - v1-dependencies
+
+      - run:
+          name: Install Hex Locally
+          command: mix local.hex --force
+
+      - run:
+          name: Install Rebar
+          command: mix local.rebar --force
+
+      - run:
+          name: Install Project Dependencies
+          command: mix deps.get
+
+      - run:
+          name: Compile Project Dependencies
+          command: mix deps.compile
+
+      - save_cache:
+          key: v1-dependencies-{{ .Branch }}--{{ checksum "mix.lock" }}
+          paths:
+            - deps
+            - _build
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  lint_project:
+    <<: *defaults
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Lint Project with Credo
+          command: mix credo
+
+      - run:
+          name: Check Formatting
+          command: mix format --check-formatted
+
+  run_tests:
+    <<: *defaults
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Run General Tests
+          command: mix test
+
+workflows:
+  version: 2
+
+  test_and_deploy:
+    jobs:
+      - checkout_code
+
+      - install_dependencies:
+          requires:
+            - checkout_code
+
+      - lint_project:
+          requires:
+            - install_dependencies
+
+      - run_tests:
+          requires:
+            - install_dependencies
