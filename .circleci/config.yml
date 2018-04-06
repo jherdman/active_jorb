@@ -60,6 +60,17 @@ jobs:
           paths:
             - .
 
+  type_check_project:
+    <<: *defaults
+
+    steps:
+      - attach_workspace:
+          at: .
+
+    - run:
+        name: Run Dialyzer
+        command: mix dialyzer --halt-exit-status
+
   lint_project:
     <<: *defaults
 
@@ -96,6 +107,10 @@ workflows:
       - install_dependencies:
           requires:
             - checkout_code
+
+      - type_check_project:
+          requires:
+            - install_dependencies
 
       - lint_project:
           requires:
