@@ -20,3 +20,9 @@ def deps do
   ]
 end
 ```
+
+## Prior Art, Credit, and Thanks
+
+* All of the maintainers of Active Job
+* The various authors of any supported backend
+* The various authors of any Elixir library supporting those backends
