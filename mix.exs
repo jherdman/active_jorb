@@ -30,7 +30,7 @@ defmodule ActiveJorb.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:credo, "~> 0.9.0"},
+      {:credo, "~> 0.9.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5.1", only: [:dev], runtime: false}
     ]
   end
