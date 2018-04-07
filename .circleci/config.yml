@@ -1,6 +1,7 @@
 defaults: &defaults
   docker:
     - image: elixir:1.6.4
+    - image: redis:4
 
   environment:
     MIX_HOME: "/root/active_jorb/global"
