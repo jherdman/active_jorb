@@ -31,7 +31,9 @@ defmodule ActiveJorb.MixProject do
   defp deps do
     [
       {:credo, "~> 0.9.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 0.5.1", only: [:dev], runtime: false}
+      {:dialyxir, "~> 0.5.1", only: [:dev], runtime: false},
+      {:sidewalk, "~> 0.3.4", only: [:dev, :test]},
+      {:redix, "~> 0.6.0", only: [:dev, :test]}
     ]
   end
 
