@@ -1,5 +1,6 @@
 defaults: &defaults
   docker:
+    # Note: If you change this, you'll need to update PLT cache below
     - image: elixir:1.6.4
     - image: redis:4
 
@@ -68,9 +69,21 @@ jobs:
       - attach_workspace:
           at: .
 
+      - restore_cache:
+          keys:
+            - v1-plt-{{ .Branch }}--{{ checksum "mix.lock" }}
+            - v1-plt-{{ .Branch }}
+            - v1-plt
+
       - run:
           name: Run Dialyzer
           command: mix dialyzer --halt-exit-status
+
+      - save_cache:
+          key: v1-plt-{{ .Branch }}--{{ checksum "mix.lock" }}
+          paths:
+            - $mix_home/dialyxir_erlang-20.3.2.plt
+            - $mix_home/dialyxir_erlang-20.3.2_elixir-1.6.4.plt
 
   lint_project:
     <<: *defaults
