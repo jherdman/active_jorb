@@ -1,8 +1,6 @@
 defmodule ActiveJorb.QueueAdapter.SidekiqTest do
   use ExUnit.Case
 
-  doctest ActiveJorb.QueueAdapter.Sidekiq
-
   setup do
     {:ok, conn} = Redix.start_link()
     {:ok, "OK"} = Redix.command(conn, ~w(FLUSHDB))

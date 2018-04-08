@@ -2,6 +2,14 @@ defmodule ActiveJorb.QueueAdapter.Sidekiq do
   @moduledoc """
   Uses the [sidewalk](https://hex.pm/packages/sidewalk) library to enqueue jobs
   with Sidekiq.
+
+  ## Example
+
+  ```
+  iex> job = %ActiveJorb.Job{job_class: "MyJob", arguments: [1, 2, 3], queue_name: "high"}
+  iex> ActiveJorb.QueueAdapter.Sidekiq.enqueue(job)
+  {:ok, "some-job-id"}
+  ```
   """
 
   @behaviour ActiveJorb.QueueAdapter
@@ -34,7 +42,7 @@ defmodule ActiveJorb.QueueAdapter.Sidekiq do
   end
 
   def enqueue_at(_, _) do
-    {:error, "you must provide both an %ActiveJorb.Job{} and a Calendar."}
+    {:error, "you must provide both an %ActiveJorb.Job{} and a NaiveDateTime."}
   end
 
   @spec normalize_timestamp(NaiveDateTime.t()) :: float()
