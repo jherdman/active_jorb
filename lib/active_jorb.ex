@@ -1,5 +1,3 @@
 defmodule ActiveJorb do
-  @moduledoc """
-  TODO
-  """
+  @moduledoc false
 end

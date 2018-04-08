@@ -14,17 +14,20 @@ defmodule ActiveJorb.QueueAdapter do
   This could also be used to delay job execution by a specific amount of
   time by constructing the appropriate timestamp.
   """
-  @callback enqueue_at(ActiveJorb.Job.t(), NaiveDateTime.t()) :: response
+  @callback enqueue_at(
+              job :: ActiveJorb.Job.t(),
+              when_to_execute_job :: NaiveDateTime.t()
+            ) :: response
 
   @doc """
   Used to enqueue a job that should be executed immediately.
   """
-  @callback enqueue(ActiveJorb.Job.t()) :: response
+  @callback enqueue(job :: ActiveJorb.Job.t()) :: response
 
   @doc """
   Not used directly by the end user, but employed by the queue adapter
   to turn an `%ActiveJorb.Job{}` into something the underlying adapter
   understands.
   """
-  @callback normalize(ActiveJorb.Job.t()) :: map()
+  @callback normalize(job :: ActiveJorb.Job.t()) :: map()
 end
