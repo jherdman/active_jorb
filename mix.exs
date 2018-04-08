@@ -40,7 +40,7 @@ defmodule ActiveJorb.MixProject do
     [
       {:credo, "~> 0.9.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5.1", only: [:dev], runtime: false},
-      {:sidewalk, "~> 0.3.4", only: [:dev, :test]},
+      {:sidewalk, "~> 0.3.4"},
       {:redix, "~> 0.6.0", only: [:dev, :test]},
       {:ex_doc, "~> 0.18.3", only: :dev, runtime: false}
     ]
