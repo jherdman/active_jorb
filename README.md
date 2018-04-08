@@ -39,7 +39,7 @@ you proxy access to the supported queue adapter in your application:
 config :my_application, MyApplication,
   job_queue_adapter: ActiveJorb.QueueAdapter.Sidekiq
 
-# config/test.exs -- note the test adapter is still WIP
+# config/test.exs
 config :my_application, MyApplication,
   job_queue_adapter: ActiveJorb.QueueAdapter.Test
 
@@ -67,7 +67,7 @@ iex> MyApplication.JobQueue.enqueue_at(job, ts)
 
 ## Testing
 
-WIP (#9)
+See `ActiveJorb.QueueAdapters.Test`.
 
 ## Prior Art, Credit, and Thanks
 
