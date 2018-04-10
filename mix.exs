@@ -45,7 +45,7 @@ defmodule ActiveJorb.MixProject do
 
       # BELOW: USED BY QUEUE ADAPTERS
 
-      {:sidewalk, "~> 0.3.4", optional: true}
+      {:sidewalk, ">= 0.3.4 and < 1.0.0", optional: true}
     ]
   end
 
