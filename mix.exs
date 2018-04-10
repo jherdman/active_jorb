@@ -16,7 +16,7 @@ defmodule ActiveJorb.MixProject do
           "README.md",
           "LICENSE.md"
         ],
-        main: "README"
+        main: "readme"
       ]
     ]
   end
