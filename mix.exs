@@ -24,7 +24,7 @@ defmodule ActiveJorb.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger, :sidewalk]
     ]
   end
 
@@ -40,9 +40,12 @@ defmodule ActiveJorb.MixProject do
     [
       {:credo, "~> 0.9.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5.1", only: [:dev], runtime: false},
-      {:sidewalk, "~> 0.3.4", only: [:dev, :test]},
-      {:redix, "~> 0.6.0", only: [:dev, :test]},
-      {:ex_doc, "~> 0.18.3", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.18.3", only: :dev, runtime: false},
+      {:redix, "~> 0.6", optional: true},
+
+      # BELOW: USED BY QUEUE ADAPTERS
+
+      {:sidewalk, "~> 0.3.4", optional: true}
     ]
   end
 
