@@ -13,7 +13,6 @@ defmodule ActiveJorb.MixProject do
       source_url: "https://github.com/jherdman/active_jorb/",
       docs: [
         extras: [
-          "CHANGELOG.md",
           "README.md",
           "LICENSE.md"
         ],
@@ -52,7 +51,8 @@ defmodule ActiveJorb.MixProject do
 
   defp package do
     [
-      licenses: ["MIT"]
+      licenses: ["MIT"],
+      maintainers: ["James Herdman"]
     ]
   end
 end
