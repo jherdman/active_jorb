@@ -52,6 +52,9 @@ defmodule ActiveJorb.MixProject do
   defp package do
     [
       licenses: ["MIT"],
+      links: %{
+        "Github" => "https://github.com/PrecisionNutrition/active_jorb"
+      },
       maintainers: ["James Herdman"]
     ]
   end
