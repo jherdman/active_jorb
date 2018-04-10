@@ -4,6 +4,7 @@ defmodule ActiveJorb.QueueAdapter.SidekiqTest do
   setup do
     {:ok, conn} = Redix.start_link()
     {:ok, "OK"} = Redix.command(conn, ~w(FLUSHDB))
+
     {:ok, [redis: conn]}
   end
 
