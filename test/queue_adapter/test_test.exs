@@ -1,8 +1,14 @@
 defmodule ActiveJorb.QueueAdapter.TestTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   alias ActiveJorb.Job
   alias ActiveJorb.QueueAdapter.Test
+
+  setup do
+    Test.start_link()
+
+    :ok
+  end
 
   describe "#enqueue" do
     test "puts the job definition into the Process dictionary" do
@@ -10,7 +16,7 @@ defmodule ActiveJorb.QueueAdapter.TestTest do
 
       {:ok, _jid} = Test.enqueue(job)
 
-      {enqueue_job} = Process.get("active_jorb_test_queue")
+      [{enqueue_job, nil}] = Test.get_queue()
 
       assert job == enqueue_job
     end
@@ -23,7 +29,7 @@ defmodule ActiveJorb.QueueAdapter.TestTest do
 
       {:ok, _jid} = Test.enqueue_at(job, ts)
 
-      {enqueue_job, enqueued_timestamp} = Process.get("active_jorb_test_queue")
+      [{enqueue_job, enqueued_timestamp}] = Test.get_queue()
 
       assert job == enqueue_job
       assert ts == enqueued_timestamp

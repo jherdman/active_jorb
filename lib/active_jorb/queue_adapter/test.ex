@@ -9,7 +9,33 @@ defmodule ActiveJorb.QueueAdapter.Test do
 
   alias ActiveJorb.Job
 
-  @process_queue_name "active_jorb_test_queue"
+  @doc """
+  Starts the Agent required to capture arguments passed to your adapter.
+  """
+  def start_link() do
+    Agent.start_link(fn -> [] end, name: __MODULE__)
+  end
+
+  @doc """
+  Probably not directly needed, but you can use this to stop our agent.
+  """
+  def stop() do
+    Agent.stop(__MODULE__)
+  end
+
+  defp update_queue(job, timestamp \\ nil) do
+    Agent.update(__MODULE__, fn jobs ->
+      jobs ++ [{job, timestamp}]
+    end)
+  end
+
+  @doc """
+  Returns all jobs and their respective timestamps (if any) in a LIFO list.
+  """
+  @spec get_queue() :: [{Job.t(), timestamp :: nil | NaiveDateTime.t()}]
+  def get_queue() do
+    Agent.get(__MODULE__, fn jobs -> jobs end)
+  end
 
   @doc false
   def normalize(arg) do
@@ -17,18 +43,17 @@ defmodule ActiveJorb.QueueAdapter.Test do
   end
 
   @doc """
-  Always returns a success response and pushes the `job` into the `Process`
-  dictionary at the "active_jorb_test_queue" key.
+  Always returns a success response and pushes the `job` into the test queue.
 
   ## Example
 
       iex> job = %ActiveJorb.Job{job_class: "EmailClients", arguments: [1]}
       iex> {:ok, _jid} = ActiveJorb.QueueAdapter.Test.enqueue(job)
-      iex> {enq_job} = Process.get("active_jorb_test_queue")
+      iex> [{enq_job, enq_ts}] = ActiveJorb.QueueAdapter.Test.get_queue()
       iex> job == enq_job
   """
   def enqueue(job = %Job{}) do
-    Process.put(@process_queue_name, {job})
+    update_queue(job)
 
     {:ok, random_jid()}
   end
@@ -39,19 +64,19 @@ defmodule ActiveJorb.QueueAdapter.Test do
 
   @doc """
   Always returns a success response and pushes the `job`, and timestamp, into
-  the `Process` dictionary at the "active_jorb_test_queue" key.
+  the test queue.
 
   ## Example
 
       iex> job = %ActiveJorb.Job{job_class: "EmailClients", arguments: [1]}
       iex> ts = ~N[2019-04-23 01:01:01]
       iex> {:ok, _jid} = ActiveJorb.QueueAdapter.Test.enqueue_at(job, ts)
-      iex> {enq_job, enq_ts} = Process.get("active_jorb_test_queue")
+      iex> [{enq_job, enq_ts}] = ActiveJorb.QueueAdapter.Test.get_queue()
       iex> job == enq_job
       iex> ts == enq_ts
   """
   def enqueue_at(job = %Job{}, timestamp) do
-    Process.put(@process_queue_name, {job, timestamp})
+    update_queue(job, timestamp)
 
     {:ok, random_jid()}
   end
