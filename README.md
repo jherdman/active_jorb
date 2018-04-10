@@ -1,4 +1,4 @@
-# ActiveJorb [![CircleCI](https://circleci.com/gh/jherdman/active_jorb/tree/master.svg?style=svg)](https://circleci.com/gh/jherdman/active_jorb/tree/master)
+# ActiveJorb [![CircleCI](https://circleci.com/gh/PrecisionNutrition/active_jorb.svg?style=svg)](https://circleci.com/gh/PrecisionNutrition/active_jorb) 
 
 An Active Job compatible queueing interface. This library will allow you to
 enqueue jobs on your existing Active Job compatible backend. This is particularly
