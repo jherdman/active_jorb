@@ -26,7 +26,6 @@ end
 | Que           | No (#4)    |                          |                                  |
 | Queue Classic | No (#5)    |                          |                                  |
 | Backburner    | No (#3)    |                          |                                  |
-| Sucker Punch  | No (#8)    |                          |                                  |
 | Sneakers      | No (#7)    |                          |                                  |
 
 ## Usage
