@@ -14,7 +14,8 @@ defmodule ActiveJorb.Job do
           priority: String.t(),
           arguments: list(),
           locale: String.t(),
-          retry: boolean
+          retry: boolean,
+          executions: pos_integer()
         }
 
   @enforce_keys [:job_class]
@@ -24,5 +25,6 @@ defmodule ActiveJorb.Job do
             priority: "",
             arguments: [],
             locale: "en",
-            retry: true
+            retry: false,
+            executions: 0
 end
