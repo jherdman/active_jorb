@@ -42,6 +42,7 @@ defmodule ActiveJorb.MixProject do
       {:dialyxir, "~> 0.5.1", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.18.3", only: :dev, runtime: false},
       {:redix, "~> 0.6", optional: true},
+      {:uuid, "~> 1.1"},
 
       # BELOW: USED BY QUEUE ADAPTERS
 

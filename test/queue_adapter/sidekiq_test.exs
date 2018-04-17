@@ -16,8 +16,7 @@ defmodule ActiveJorb.QueueAdapter.SidekiqTest do
       job = %Job{
         job_class: "MyJob",
         arguments: [1, 2, 3],
-        queue_name: "high",
-        retry: false
+        queue_name: "high"
       }
 
       assert {:ok, _jid} = Sidekiq.enqueue(job)
@@ -31,8 +30,7 @@ defmodule ActiveJorb.QueueAdapter.SidekiqTest do
       job = %Job{
         job_class: "MyJob",
         arguments: [1, 2, 3],
-        queue_name: "high",
-        retry: false
+        queue_name: "high"
       }
 
       delay = ~N[2048-01-01 12:30:00]
@@ -57,8 +55,7 @@ defmodule ActiveJorb.QueueAdapter.SidekiqTest do
       job = %ActiveJorb.Job{
         job_class: "MyJob",
         arguments: [1, 2, 3],
-        queue_name: "high",
-        retry: false
+        queue_name: "high"
       }
 
       normalized_job = Sidekiq.normalize(job)
@@ -66,7 +63,6 @@ defmodule ActiveJorb.QueueAdapter.SidekiqTest do
       assert normalized_job.class == "ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper"
       assert normalized_job.wrapped == job.job_class
       assert normalized_job.queue == job.queue_name
-      assert normalized_job.retry == job.retry
       assert normalized_job.args == [job]
     end
   end
