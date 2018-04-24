@@ -11,20 +11,20 @@ defmodule ActiveJorb.Job do
   @type t :: %__MODULE__{
           job_class: String.t(),
           queue_name: String.t(),
-          priority: String.t(),
+          priority: nil | String.t(),
           arguments: list(),
           locale: String.t(),
-          retry: boolean,
-          executions: pos_integer()
+          executions: pos_integer(),
+          job_id: nil | String.t()
         }
 
   @enforce_keys [:job_class]
 
   defstruct job_class: nil,
             queue_name: "default",
-            priority: "",
+            priority: nil,
             arguments: [],
             locale: "en",
-            retry: false,
-            executions: 0
+            executions: 0,
+            job_id: nil
 end

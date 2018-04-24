@@ -25,9 +25,13 @@ if Code.ensure_loaded?(Sidewalk) do
         class: "ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper",
         wrapped: job.job_class,
         queue: job.queue_name,
-        retry: job.retry,
         args: [job]
       }
+    end
+
+    @spec add_job_id(ActiveJorb.Job.t()) :: ActiveJorb.Job.t()
+    defp add_job_id(job) do
+      %{job | job_id: UUID.uuid4()}
     end
 
     @doc """
@@ -38,6 +42,7 @@ if Code.ensure_loaded?(Sidewalk) do
       normalized_timestamp = normalize_timestamp(timestamp)
 
       job
+      |> add_job_id()
       |> normalize()
       |> Sidewalk.Client.enqueue_at(normalized_timestamp)
     end
@@ -62,6 +67,7 @@ if Code.ensure_loaded?(Sidewalk) do
     @spec enqueue(ActiveJorb.Job.t()) :: ActiveJorb.QueueAdapter.response()
     def enqueue(job = %ActiveJorb.Job{}) do
       job
+      |> add_job_id()
       |> normalize()
       |> Sidewalk.Client.enqueue()
     end
